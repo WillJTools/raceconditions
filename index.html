@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>CANNON - Race Condition Request Generator</title>
+  <script src="cannon.obf.js" defer></script>
+  <style>
+    body { font-family: Arial, sans-serif; background:#f4f4f4; margin:0; padding:0; text-align:center; }
+    .container { max-width: 900px; margin:40px auto; background:#fff; padding:20px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,.1); }
+    h1 { color:#b30000; margin-bottom:5px; }
+    p { color:#666; margin-top:0; }
+    textarea { width:100%; height:170px; padding:10px; border:1px solid #ccc; border-radius:6px; resize:none; font-size:14px; }
+    .row { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:12px; }
+    .field { display:flex; flex-direction:column; align-items:flex-start; }
+    label { font-size:13px; color:#444; margin-bottom:4px; }
+    input { padding:8px; border:1px solid #ccc; border-radius:6px; font-size:14px; width:140px; }
+    button { padding:10px 18px; border:0; border-radius:6px; cursor:pointer; font-size:15px; margin:10px; }
+    #convertButton { background:#b30000; color:#fff; }
+    #convertButton:hover { background:#8f0000; }
+    #copyButton { background:#28a745; color:#fff; }
+    #copyButton:hover { background:#218838; }
+    .hint { font-size:12px; color:#777; max-width:780px; margin:0 auto; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>CANNON</h1>
+    <p>Convert a request into a race-condition burst script</p>
+    <div class="hint">
+      Paste a raw HTTP request (Burp) or a curl command. Cannon generates Python that fires synchronized concurrent requests (≤10).
+    </div>
+
+    <h3>Paste Web Request or cURL</h3>
+    <textarea id="webRequest" placeholder="Paste your request here..."></textarea>
+
+    <div class="row">
+      <div class="field">
+        <label for="concurrency">Concurrency (1–10)</label>
+        <input id="concurrency" type="number" min="1" max="10" value="5" />
+      </div>
+      <div class="field">
+        <label for="rounds">Rounds (bursts)</label>
+        <input id="rounds" type="number" min="1" max="50" value="3" />
+      </div>
+      <div class="field">
+        <label for="timeout">Timeout (sec)</label>
+        <input id="timeout" type="number" min="1" max="120" value="15" />
+      </div>
+    </div>
+
+    <div class="row">
+      <button id="convertButton">GENERATE CANNON SCRIPT</button>
+    </div>
+
+    <h3>Generated Python Script</h3>
+    <textarea id="pythonScript" readonly placeholder="Your race-test Python script will appear here..."></textarea>
+
+    <div class="row">
+      <button id="copyButton">COPY CODE</button>
+    </div>
+  </div>
+</body>
+</html>
